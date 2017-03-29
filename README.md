@@ -23,8 +23,8 @@ A dummy application for a bank; should provide various functions of a retail ban
 
 ### Current Features
 
-* A customer can open an accountTemp
-* A customer can deposit / withdraw funds from an accountTemp
+* A customer can open an account
+* A customer can deposit / withdraw funds from an account
 * A customer can request a statement that shows transactions and totals for each of their accounts
 * Different accounts have interest calculated in different ways
   * **Checking accounts** have a flat rate of 0.1%
