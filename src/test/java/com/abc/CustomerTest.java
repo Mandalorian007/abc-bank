@@ -56,4 +56,21 @@ public class CustomerTest {
         oscar.openAccount(new MaxiSavingsAccount());
         assertEquals(3, oscar.getNumberOfAccounts());
     }
+
+    @Test
+    public void testInterestEarned() {
+        Customer oscar = new Customer("Oscar");
+        SavingsAccount savingsAccount = new SavingsAccount();
+        oscar.openAccount(savingsAccount);
+        CheckingAccount checkingAccount = new CheckingAccount();
+        oscar.openAccount(checkingAccount);
+        MaxiSavingsAccount maxiSavingsAccount = new MaxiSavingsAccount();
+        oscar.openAccount(maxiSavingsAccount);
+
+        savingsAccount.deposit(100.0);
+        checkingAccount.deposit(500.0);
+        maxiSavingsAccount.deposit(1000.0);
+
+        assertEquals(20.6, oscar.totalInterestEarned(), 0);
+    }
 }
