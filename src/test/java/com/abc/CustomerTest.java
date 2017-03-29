@@ -50,7 +50,7 @@ public class CustomerTest {
     }
 
     @Test
-    public void testThreeAcounts() {
+    public void testThreeAccounts() {
         Customer oscar = new Customer("Oscar");
         oscar.openAccount(new SavingsAccount());
         oscar.openAccount(new CheckingAccount());
