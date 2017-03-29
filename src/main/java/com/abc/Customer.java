@@ -28,20 +28,25 @@ public class Customer {
 
     public double totalInterestEarned() {
         return accounts.stream()
-                .mapToDouble(account -> account.interestEarned())
+                .mapToDouble(Account::interestEarned)
                 .sum();
     }
 
     public String getStatement() {
-        String statement = null;
-        statement = "Statement for " + name + "\n";
+        StringBuilder statement = new StringBuilder();
+        statement.append("Statement for ");
+        statement.append(name);
+        statement.append("\n");
         double total = 0.0;
         for (Account a : accounts) {
-            statement += "\n" + statementForAccount(a) + "\n";
+            statement.append("\n");
+            statement.append(statementForAccount(a));
+            statement.append("\n");
             total += a.sumTransactions();
         }
-        statement += "\nTotal In All Accounts " + toDollars(total);
-        return statement;
+        statement.append("\nTotal In All Accounts ");
+        statement.append(toDollars(total));
+        return statement.toString();
     }
 
     private String statementForAccount(Account account) {
