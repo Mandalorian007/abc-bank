@@ -11,16 +11,15 @@ public class Customer {
 
     public Customer(String name) {
         this.name = name;
-        this.accounts = new ArrayList<Account>();
+        this.accounts = new ArrayList<>();
     }
 
     public String getName() {
         return name;
     }
 
-    public Customer openAccount(Account account) {
+    public void openAccount(Account account) {
         accounts.add(account);
-        return this;
     }
 
     public int getNumberOfAccounts() {
@@ -28,10 +27,9 @@ public class Customer {
     }
 
     public double totalInterestEarned() {
-        double total = 0;
-        for (Account a : accounts)
-            total += a.interestEarned();
-        return total;
+        return accounts.stream()
+                .mapToDouble(account -> account.interestEarned())
+                .sum();
     }
 
     public String getStatement() {
@@ -46,30 +44,35 @@ public class Customer {
         return statement;
     }
 
-    private String statementForAccount(Account a) {
-        String s = "";
+    private String statementForAccount(Account account) {
+        StringBuilder s = new StringBuilder();
 
        //Translate to pretty account type
-        switch(a.getAccountType()){
-            case Account.CHECKING:
-                s += "Checking Account\n";
+        switch(account.getAccountType()){
+            case CHECKING:
+                s.append("Checking AccountTemp\n");
                 break;
-            case Account.SAVINGS:
-                s += "Savings Account\n";
+            case SAVINGS:
+                s.append("Savings AccountTemp\n");
                 break;
-            case Account.MAXI_SAVINGS:
-                s += "Maxi Savings Account\n";
+            case MAXI_SAVINGS:
+                s.append("Maxi Savings AccountTemp\n");
                 break;
         }
 
         //Now total up all the transactions
         double total = 0.0;
-        for (Transaction t : a.transactions) {
-            s += "  " + (t.amount < 0 ? "withdrawal" : "deposit") + " " + toDollars(t.amount) + "\n";
-            total += t.amount;
+        for (Transaction transaction : account.getTransactions()) {
+            s.append("  ");
+            s.append(transaction.getAmount() < 0 ? "withdrawal" : "deposit");
+            s.append(" ");
+            s.append(toDollars(transaction.getAmount()));
+            s.append("\n");
+            total += transaction.getAmount();
         }
-        s += "Total " + toDollars(total);
-        return s;
+        s.append("Total ");
+        s.append(toDollars(total));
+        return s.toString();
     }
 
     private String toDollars(double d){
