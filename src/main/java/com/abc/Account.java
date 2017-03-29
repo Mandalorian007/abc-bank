@@ -6,6 +6,10 @@ import java.util.List;
 public abstract class Account {
     private final List<Transaction> transactions = new ArrayList<>();
 
+    abstract double interestEarned();
+
+    abstract AccountType getAccountType();
+
     public void deposit(double amount) {
         enforceAmountIsValid(amount);
         transactions.add(new Transaction(amount));
@@ -20,7 +24,9 @@ public abstract class Account {
         return transactions;
     }
 
-    abstract double interestEarned();
+    public void accrueDailyInterest() {
+        deposit(interestEarned()/365.0);
+    }
 
     public double sumTransactions() {
         return transactions.stream()
@@ -32,6 +38,4 @@ public abstract class Account {
         if(amount <= 0)
             throw new IllegalArgumentException("Transaction amounts must be greater than zero.");
     }
-
-    abstract AccountType getAccountType();
 }
