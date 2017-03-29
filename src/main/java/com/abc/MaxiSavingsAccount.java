@@ -1,14 +1,34 @@
 package com.abc;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class MaxiSavingsAccount extends Account {
     @Override
     double interestEarned() {
         double amount = sumTransactions();
-        if (amount <= 1000)
-            return amount * 0.02;
-        if (amount <= 2000)
-            return 20 + (amount-1000) * 0.05;
-        return 70 + (amount-2000) * 0.1;
+        if(checkForWidthdraws()) {
+            return amount * 0.001;
+        } else {
+            return amount * 0.5;
+        }
+    }
+
+    private boolean checkForWidthdraws() {
+        List<Transaction> withdrawsInPast10Days = getTransactions().stream()
+                .filter(transaction -> transaction.getAmount() < 0 && transaction.getTransactionDate().after(daysAgo(10)))
+                .collect(Collectors.toList());
+        return withdrawsInPast10Days.size() > 0;
+    }
+
+
+    private static Date daysAgo(int days) {
+        GregorianCalendar gc = new GregorianCalendar();
+        gc.add(Calendar.DATE, -days);
+        return gc.getTime();
     }
 
     @Override
