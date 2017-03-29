@@ -29,7 +29,7 @@ public class Bank {
 
     public double totalInterestPaid() {
         return customers.stream()
-                .mapToDouble(customer -> customer.totalInterestEarned())
+                .mapToDouble(Customer::totalInterestEarned)
                 .sum();
     }
 }

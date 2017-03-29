@@ -24,7 +24,7 @@ public abstract class Account {
 
     public double sumTransactions() {
         return transactions.stream()
-                .mapToDouble(transaction -> transaction.getAmount())
+                .mapToDouble(Transaction::getAmount)
                 .sum();
     }
 
