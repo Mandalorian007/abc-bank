@@ -32,6 +32,15 @@ public class Customer {
                 .sum();
     }
 
+    public void transfer(Account from, Account to, double amount) {
+        //ensure customer can only transfer between their own accounts
+        if(!accounts.contains(from) || !accounts.contains(to)) {
+            throw new IllegalArgumentException("You can only transfer money between 2 accounts you own.");
+        }
+        from.withdraw(amount);
+        to.deposit(amount);
+    }
+
     public String getStatement() {
         StringBuilder statement = new StringBuilder();
         statement.append("Statement for ");

@@ -73,4 +73,22 @@ public class CustomerTest {
 
         assertEquals(20.6, oscar.totalInterestEarned(), 0);
     }
+
+    @Test
+    public void testAccountBalanceTransfer() {
+        Customer oscar = new Customer("Oscar");
+        SavingsAccount savingsAccount = new SavingsAccount();
+        oscar.openAccount(savingsAccount);
+        CheckingAccount checkingAccount = new CheckingAccount();
+        oscar.openAccount(checkingAccount);
+
+        savingsAccount.deposit(100.0);
+        checkingAccount.deposit(100.0);
+
+        oscar.transfer(savingsAccount, checkingAccount, 50.0);
+
+        assertEquals(50.0, savingsAccount.sumTransactions(), 0.0);
+        assertEquals(150.0, checkingAccount.sumTransactions(), 0.0);
+
+    }
 }
