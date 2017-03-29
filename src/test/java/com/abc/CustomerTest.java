@@ -71,7 +71,7 @@ public class CustomerTest {
         checkingAccount.deposit(500.0);
         maxiSavingsAccount.deposit(1000.0);
 
-        assertEquals(20.6, oscar.totalInterestEarned(), 0);
+        assertEquals(500.6, oscar.totalInterestEarned(), 0);
     }
 
     @Test
